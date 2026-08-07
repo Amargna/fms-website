@@ -1,6 +1,6 @@
 # [Your Gaming Company] — Website
 
-Official marketing website for **[Your Gaming Company]**, an independent game development studio. Built with [Astro](https://astro.build/), plain CSS, and vanilla JavaScript.
+Official marketing website for DemoGame Company, an independent game development studio. Built with [Astro](https://astro.build/), plain CSS,Typescript and vanilla JavaScript.
 
 ## About This Project
 
@@ -85,12 +85,10 @@ Open the relevant file in `src/pages/`. Each page has its own scoped `<style>` b
 
 ## Still To Do
 
-- [ ] Replace placeholder content (`[bracketed text]`) with real copy
+- [ ] Replace placeholder content  with real copy
 - [ ] Add real game/project images, team photos, and hero background
-- [ ] Build individual detail pages per game/project (currently link back to their listing page)
 - [ ] Update `src/config.yaml` with final site name and SEO metadata
 - [ ] Add real studio address for the Contact page map
-- [ ] Confirm whether the blog feature (`/blog`, inherited from the AstroWind template) is being kept
 
 ## Deployment
 
