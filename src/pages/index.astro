@@ -1,277 +1,455 @@
 ---
 // src/pages/index.astro
-import Layout from '../layouts/Layout.astro';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { products } from '~/data/products';
+import { projects } from '~/data/projects';
+
+const metadata = {
+  title: 'Demo Games — Crafting Worlds Worth Playing',
+};
+
+const featuredProducts = products.slice(0, 3);
+const featuredProjects = projects.slice(0, 3);
+
+const services = [
+  { icon: '🎮', title: 'Game Development' },
+  { icon: '💻', title: 'Web & Interactive' },
+  { icon: '🚀', title: 'Game Publishing' },
+  { icon: '🤝', title: 'Partnerships' },
+];
 ---
 
-<Layout>
-  <!-- Hero Section -->
+<PageLayout metadata={metadata}>
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Crafting worlds worth playing</h1>
-      <p>
-        [Your Gaming Company] is an independent studio building [genre]-driven games for players
-        who want more than just a pastime.
-      </p>
-      <div class="hero-actions">
-        <a href="/products" class="btn btn-primary">View Our Games</a>
-        <a href="/projects" class="btn btn-secondary">See Our Work</a>
-      </div>
+      <!-- <h1>Crafting Worlds Worth Playing</h1> -->
+      <a href="/products" class="btns btn-primary">Play Now</a>
     </div>
   </section>
 
   <!-- Featured Products -->
   <section class="section">
-    <h2>Featured Products</h2>
-    <p class="section-subtitle">A look at what we've built.</p>
+    <h2 class="section-title">Featured Products</h2>
     <div class="card-grid">
-      <a href="/products" class="card">
-        <div class="card-thumb">[Game Cover]</div>
-        <h3>[Game Title 1]</h3>
-        <p>One-line hook — genre, platform, what makes it stand out.</p>
-        <span class="card-link">Learn More →</span>
-      </a>
-      <a href="/products" class="card">
-        <div class="card-thumb">[Game Cover]</div>
-        <h3>[Game Title 2]</h3>
-        <p>One-line hook — genre, platform, what makes it stand out.</p>
-        <span class="card-link">Learn More →</span>
-      </a>
-      <a href="/products" class="card">
-        <div class="card-thumb">[Game Cover]</div>
-        <h3>[Game Title 3]</h3>
-        <p>One-line hook — genre, platform, what makes it stand out.</p>
-        <span class="card-link">Learn More →</span>
-      </a>
+      {
+        featuredProducts.map((p) => (
+          <a href={`/products/${p.slug}`} class="card">
+            <div class="card-thumb">
+              {p.images?.[0] ? (
+                <img src={p.images[0]} alt={p.title} />
+              ) : null}
+              <span class="card-overlay">Learn More</span>
+            </div>
+            <h3>{p.title}</h3>
+          </a>
+        ))
+      }
     </div>
   </section>
 
   <!-- Featured Projects -->
-  <section class="section section-alt">
-    <h2>Featured Projects</h2>
-    <p class="section-subtitle">Selected client and co-development work.</p>
-    <div class="card-grid">
-      <a href="/projects" class="card">
-        <div class="card-thumb">[Project Thumbnail]</div>
-        <h3>[Project Name 1]</h3>
-        <p>Client/type of engagement, and the outcome in one line.</p>
-        <span class="card-link">View Case Study →</span>
-      </a>
-      <a href="/projects" class="card">
-        <div class="card-thumb">[Project Thumbnail]</div>
-        <h3>[Project Name 2]</h3>
-        <p>Client/type of engagement, and the outcome in one line.</p>
-        <span class="card-link">View Case Study →</span>
-      </a>
-      <a href="/projects" class="card">
-        <div class="card-thumb">[Project Thumbnail]</div>
-        <h3>[Project Name 3]</h3>
-        <p>Client/type of engagement, and the outcome in one line.</p>
-        <span class="card-link">View Case Study →</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Services Overview -->
   <section class="section">
-    <h2>Services</h2>
-    <p class="section-subtitle">From concept to launch, we partner with studios and publishers.</p>
-    <div class="services-grid">
-      <div class="service-item">
-        <div class="service-icon">✏️</div>
-        <h3>Game Design</h3>
-        <p>Concepting, prototyping, and design systems for new titles.</p>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">💻</div>
-        <h3>Development</h3>
-        <p>Full-cycle development across PC, console, and mobile.</p>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">🚀</div>
-        <h3>Publishing</h3>
-        <p>Bringing finished titles to market across major storefronts.</p>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">🤝</div>
-        <h3>Co-Development</h3>
-        <p>Partnering with other studios on scope, art, or engineering.</p>
-      </div>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="card-grid">
+      {
+        featuredProjects.map((p) => (
+          <a href={`/projects/${p.slug}`} class="card">
+            <div class="card-thumb">
+              {p.images?.[0] ? <img src={p.images[0]} alt={p.title} /> : null}
+              <span class="card-overlay">Learn More</span>
+            </div>
+            <h3>{p.title}</h3>
+          </a>
+        ))
+      }
     </div>
   </section>
 
+<!-- Services Overview -->
+<section class="section services-section">
+  <h2 class="section-title">Services Overview</h2>
+
+  <div class="services-row">
+    {
+      services.map((service) => (
+        <a href="/services" class="service-box">
+          <span class="service-glyph">{service.icon}</span>
+          <span class="service-title">{service.title}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
   <!-- Contact Bar -->
   <section class="contact-bar">
     <h2>Let's get in touch?</h2>
-    <p>Have a project in mind, or want to talk about one of our games? We'd love to hear from you.</p>
-    <a href="/contact" class="btn btn-primary">Get in Touch</a>
+    <a href="/contact" class="btne">Contact</a>
   </section>
-</Layout>
+</PageLayout>
 
 <style>
   .hero {
-    background: #111;
-    color: #fff;
+    background-image: url('/hero-bg.png');
+    /* background: linear-gradient(135deg, var(--brand-purple-dark), var(--brand-purple-darker)); */
+    height: 530px;
+
+      color: #fff;
     padding: 6rem 1.5rem;
     text-align: center;
+    
   }
-  .hero-content {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-size: 2.75rem;
-    margin-bottom: 1rem;
-  }
-  .hero p {
-    font-size: 1.1rem;
-    color: #ccc;
+  .hero-content h1 {
+    
+    color: #fff;
+    font-size: 2.5rem;
     margin-bottom: 2rem;
   }
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    circle,
+    transparent 55%,
+    rgba(0, 0, 0, 0.575) 100%
+  );
+}
 
-  .btn {
+.hero:hover::after {
+  opacity: 5;
+}
+  .btns {
     display: inline-block;
-    padding: 0.75rem 1.75rem;
+  background:#00000017;
+    padding: 12px 32px;
     border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: 700;
+    border: 2px solid #790696;
+    font-size: 23px;
+    margin-top: 350px;
     transition: transform 0.15s ease, background 0.15s ease;
   }
-  .btn-primary {
-    background: #6d28d9;
-    color: #fff;
-  }
-  .btn-primary:hover {
-    background: #5b21b6;
-    transform: translateY(-2px);
-  }
-  .btn-secondary {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #555;
-  }
-  .btn-secondary:hover {
-    border-color: #fff;
+
+  .btns:hover{
+  /* color:rgba(59, 9, 105, 0.767); */
+    background:#00000063;
     transform: translateY(-2px);
   }
 
   .section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
-    text-align: center;
+    padding: 3rem 1.5rem;
   }
-  .section-alt {
-    background: #f9f8fc;
-  }
-  .section h2 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-  .section-subtitle {
-    color: #666;
-    margin-bottom: 2.5rem;
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    color: var(--text-dark);
   }
 
   .card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    text-align: left;
+    gap: 1.25rem;
   }
   .card {
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 1.25rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    padding: 1rem;
     display: block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.15);
+    border-color: var(--brand-purple);
   }
   .card-thumb {
-    background: #e5e5e5;
+    position: relative;
+    background: var(--brand-purple-light);
     height: 140px;
     border-radius: 6px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #999;
-    font-size: 0.85rem;
-    margin-bottom: 1rem;
   }
-  .card h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.15s ease;
   }
-  .card p {
-    color: #555;
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
+  .card:hover .card-thumb img {
+    filter: brightness(0.55);
   }
-  .card-link {
-    color: #6d28d9;
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 0.85rem;
     font-weight: 600;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    text-align: center;
-  }
-  .service-item {
-    padding: 1.5rem 1rem;
-  }
-  .service-icon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-  }
-  .service-item h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.05rem;
-  }
-  .service-item p {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .contact-bar {
-    background: #6d28d9;
     color: #fff;
-    text-align: center;
-    padding: 4rem 1.5rem;
+    opacity: 0;
+    transition: opacity 0.15s ease;
   }
-  .contact-bar h2 {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
+  .card:hover .card-overlay {
+    opacity: 1;
   }
-  .contact-bar p {
-    margin-bottom: 1.5rem;
-    color: #ede9fe;
+  .card h3 {
+    font-size: 1rem;
+    color: var(--text-dark);
   }
-  .contact-bar .btn-primary {
-    background: #fff;
-    color: #6d28d9;
-  }
-  .contact-bar .btn-primary:hover {
-    background: #f3f0ff;
-  }
+
+
+
+.services-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.services-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.service-box {
+  position: relative;
+
+  min-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.65rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(121, 9, 150, 0.13),
+      rgba(206, 115, 203, 0.06)
+    );
+
+  border: 1px solid rgba(180, 100, 190, 0.2);
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.service-box::before {
+  content: "";
+
+  position: absolute;
+
+  width: 80px;
+  height: 80px;
+
+  top: -35px;
+  right: -25px;
+
+  border-radius: 50%;
+
+  background: rgba(121, 9, 150, 0.18);
+
+  filter: blur(20px);
+
+  transition: opacity 0.2s ease;
+}
+
+.service-glyph {
+  position: relative;
+  z-index: 1;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(121, 9, 150, 0.12);
+
+  border: 1px solid rgba(170, 80, 190, 0.25);
+
+  font-size: 1.6rem;
+
+  filter: drop-shadow(
+    0 0 8px rgba(170, 70, 210, 0.45)
+  );
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.service-title {
+  position: relative;
+  z-index: 1;
+
+  color: #d9cde2;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.service-box:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(160, 70, 190, 0.55);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(121, 9, 150, 0.23),
+      rgba(206, 115, 203, 0.09)
+    );
+
+  box-shadow:
+    0 10px 30px rgba(90, 20, 120, 0.22);
+}
+
+.service-box:hover .service-glyph {
+  transform: scale(1.08);
+
+  background: rgba(121, 9, 150, 0.22);
+}
+ .contact-bar {
+  position: relative;
+  min-height: 350px;
+  height: 300px;
+  background-image:
+    linear-gradient(
+      rgba(10, 6, 18, 0.288),
+      rgba(10, 6, 18, 0.24)
+    ),
+    url('/contactus.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+}
+
+/* Slightly soften the image without blurring the text */
+.contact-bar::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  background: inherit;
+  filter: blur(1.5px);
+  transform: scale(1.02);
+  z-index: 0;
+}
+
+/* Dark cinematic overlay */
+.contact-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(8, 5, 15, 0.45),
+    rgba(8, 5, 15, 0.08),
+    rgba(8, 5, 15, 0.45)
+  );
+  z-index: 1;
+}
+
+.contact-bar h2 {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 1.25rem;
+  height: auto;
+
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.7);
+}
+
+.btne {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 150px;
+  padding: 12px 34px;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+
+  background: rgba(35, 20, 50, 0.65);
+  backdrop-filter: blur(8px);
+
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btne:hover {
+  transform: translateY(-3px);
+  background: rgba(121, 9, 150, 0.8);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 30px rgba(121, 9, 150, 0.35);
+}
+
+   
+  
 
   @media (max-width: 768px) {
     .card-grid,
-    .services-grid {
+    .services-row {
       grid-template-columns: 1fr;
-    }
-    .hero h1 {
-      font-size: 2rem;
     }
   }
 </style>
